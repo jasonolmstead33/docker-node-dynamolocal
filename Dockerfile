@@ -1,15 +1,21 @@
+#dynamodb LOCAL
+
 FROM java:8
 
-MAINTAINER Ryan Fitzgerald, ryan.fitz1@gmail.com
+MAINTAINER jdietrich
 
-WORKDIR /data
+#RUN apt-get update && apt-get install -y \
+
+WORKDIR /opt
 
 RUN wget http://dynamodb-local.s3-website-us-west-2.amazonaws.com/dynamodb_local_latest.tar.gz
+
 RUN tar xzf dynamodb_local_latest.tar.gz
-RUN rm dynamodb_local_latest.tar.gz
-
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash
-RUN apt-get install -y nodejs
-
 
 EXPOSE 8000
+
+RUN mkdir /db
+
+VOLUME /db
+
+CMD ["java","-Djava.library.path=./DynamoDBLocal_lib","-jar","DynamoDBLocal.jar","-sharedDb","-inMemory","-cors","*","-port", "8000","-dbPath","/db"]
