@@ -14,8 +14,4 @@ RUN tar xzf dynamodb_local_latest.tar.gz
 
 EXPOSE 8000
 
-RUN mkdir /db
-
-VOLUME /db
-
-CMD ["java","-Djava.library.path=./DynamoDBLocal_lib","-jar","DynamoDBLocal.jar","-sharedDb","-inMemory","-cors","*","-port", "8000","-dbPath","/db"]
+CMD ["java","-Djava.library.path=./DynamoDBLocal_lib","-jar","DynamoDBLocal.jar","-sharedDb","-inMemory","-cors","*","-port", "8000"]
